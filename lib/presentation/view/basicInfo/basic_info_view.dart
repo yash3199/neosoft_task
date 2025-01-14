@@ -2,9 +2,11 @@ import 'dart:io';
 
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:neosoft_task/register_controller.dart';
+import 'package:neosoft_task/presentation/controllers/basicInfo/basic_info_controller.dart';
 
-import 'common_textform_field.dart';
+import '../../widgets/common_button.dart';
+import '../../widgets/common_textfield.dart';
+
 
 class BasicInfoPage extends GetView<RegistrationController> {
   @override
@@ -17,6 +19,7 @@ class BasicInfoPage extends GetView<RegistrationController> {
             children: [
               SizedBox(height: 25.0,),
               Text("Register",style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold),),
+              SizedBox(height: 10.0,),
               Form(
                 key: controller.formKey,
                 child: Column(
@@ -29,7 +32,7 @@ class BasicInfoPage extends GetView<RegistrationController> {
                             radius: 60,
                             backgroundImage: controller.selectedImagePath.value.isNotEmpty
                                 ? FileImage(File(controller.selectedImagePath.value))
-                                : AssetImage('assets/default_avatar.png') as ImageProvider,
+                                : AssetImage('assets/images/profile.jpeg') as ImageProvider,
                           ),
                           // Pencil button for picking an image
                           Positioned(
@@ -141,19 +144,28 @@ class BasicInfoPage extends GetView<RegistrationController> {
                       ],
                     ),
                     SizedBox(height: 12.0,),
-                    TextFormFieldCommon(controller: controller.passwordController.value,
-                      labelText: 'password',
-                      validator:(value) {
-                        if (value == null || !RegExp(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$').hasMatch(value)) {
-                          return 'Enter a valid password';
-                        }
-                        return null;
-                      },
-                      prefixIcon: Icons.lock,
-                      suffixIcon: Icons.visibility_off,
-                      aboveText: "Password*",
-                      keyboardType: TextInputType.text,
-                      obscureText: true,
+
+                    Obx(()=>
+                        TextFormFieldCommon(
+                          onTap: (){
+                            controller.changePasswordVisibility();
+                          },
+                          controller: controller.passwordController.value,
+                          labelText: 'password',
+                          validator:(value) {
+                            if (value == null || !RegExp(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$').hasMatch(value)) {
+                              return 'Enter a valid password';
+                            }
+                            return null;
+                          },
+                          prefixIcon: Icons.lock,
+                          suffixIcon: controller.showPassword.value==false?
+                          Icons.visibility_off:Icons.visibility,
+                          aboveText: "Password*",
+                          keyboardType: TextInputType.text,
+                          obscureText: controller.showPassword.value==false? true:false,
+                        ),
+
                     ),
                     SizedBox(height: 12.0,),
                     TextFormFieldCommon(controller: controller.confirmPasswordController.value,
@@ -172,19 +184,11 @@ class BasicInfoPage extends GetView<RegistrationController> {
                     SizedBox(height: 20),
                     Padding(
                       padding: const EdgeInsets.only(bottom: 12.0),
-                      child: GestureDetector(
-                        onTap: () {controller.SubmitRegistration();},
-                        child:
-                        Container(
-                          height: 50,
-                          decoration: BoxDecoration(
-                            color: Colors.blue[900],
-                          ),
-                          child: Center(
-                              child: Text("Next", style: TextStyle(color: Colors.white,
-                                  fontSize: 20, fontWeight: FontWeight.bold),)),
-                        ),
-
+                      child: CommonButton(
+                        text: "Next",
+                        onTap: (){
+                          controller.SubmitRegistration();
+                        },
                       ),
                     )
 

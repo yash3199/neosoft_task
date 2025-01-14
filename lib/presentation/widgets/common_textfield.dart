@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 
 class TextFormFieldCommon extends StatefulWidget {
@@ -6,14 +7,15 @@ class TextFormFieldCommon extends StatefulWidget {
   final FormFieldValidator<String>? validator;
   final IconData? prefixIcon;
   final IconData? suffixIcon;
-
+  final VoidCallback? onTap;
   final String? aboveText;
   final TextInputType keyboardType;
   final bool? obscureText;
+  final bool? showPassword;
   const TextFormFieldCommon({required this.controller,
     required this.labelText,required this.validator,
     required this.prefixIcon, this.aboveText,required this.keyboardType,
-    this.obscureText,this.suffixIcon, super.key});
+    this.obscureText,this.suffixIcon, this.onTap, this.showPassword, super.key});
 
   @override
   State<TextFormFieldCommon> createState() => _TextFormFieldCommonState();
@@ -33,7 +35,9 @@ class _TextFormFieldCommonState extends State<TextFormFieldCommon> {
           decoration: InputDecoration(
             labelText: widget.labelText,
             prefixIcon: widget.prefixIcon != null ? Icon(widget.prefixIcon,color: Colors.blue[900],) : null,
-            suffixIcon: widget.suffixIcon !=null? Icon(widget.suffixIcon,color: Colors.blue[900],):null,
+            suffixIcon: widget.suffixIcon !=null? GestureDetector(
+                onTap: widget.onTap ?? (){},
+                child: Icon(widget.suffixIcon,color: Colors.blue[900],)):null,
             border: OutlineInputBorder(), // Always shows a border
             enabledBorder: OutlineInputBorder(
               borderSide: BorderSide(color: Colors.black,), // Default border when not focused

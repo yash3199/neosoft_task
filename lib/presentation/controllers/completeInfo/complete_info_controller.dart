@@ -1,8 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'education_option_enum.dart';
+import 'package:flutter/material.dart';
+import 'package:neosoft_task/src/core/routes/routes.dart';
+
+import '../../widgets/education_enum.dart';
 
 class EducationController extends GetxController {
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   var selectedEducation = EducationLevel.graduate.obs;
   var selectedYear = DateTime.now().year.obs;
   List<int> yearList = [];
@@ -17,6 +20,15 @@ class EducationController extends GetxController {
     super.onInit();
     generateYearList();
   }
+
+
+  void submitYourInfo() {
+    if (formKey.currentState!.validate()) {
+      Get.toNamed(Routes.addressInfoPage);
+
+    }
+  }
+
 
 
   void updateEducation(EducationLevel newValue) {
@@ -36,7 +48,3 @@ class EducationController extends GetxController {
     }
   }
 }
-
-
-
-

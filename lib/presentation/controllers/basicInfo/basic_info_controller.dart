@@ -2,8 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-
-import 'complete_info.dart';
+import 'package:neosoft_task/src/core/routes/routes.dart';
 
 class RegistrationController extends GetxController{
   List gender=["Male","Female","Other"];
@@ -17,11 +16,34 @@ class RegistrationController extends GetxController{
   final mobileNumberController = TextEditingController().obs;
   final ImagePicker picker = ImagePicker();
   var selectedImagePath = ''.obs;
+  var showPassword = false.obs;
+
+
+  @override
+  void onClose() {
+    firstNameController.value.dispose();
+    lastNameController.value.dispose();
+    emailController.value.dispose();
+    passwordController.value.dispose();
+    confirmPasswordController.value.dispose();
+    mobileNumberController.value.dispose();
+  }
 
   void SubmitRegistration() {
     if (formKey.currentState!.validate()) {
-      Get.to(ProfessionalInfoPage());
+      if(passwordController.value.text==confirmPasswordController.value.text) {
+        Get.toNamed(Routes.completeInfoPage);
+      }else{
+        Get.showSnackbar(GetSnackBar(
+          message: 'password doesnt match',
+          duration: Duration(seconds: 2),
+        ));
+      }
     }
+  }
+
+  void changePasswordVisibility(){
+    showPassword.value=!showPassword.value;
   }
 
 
