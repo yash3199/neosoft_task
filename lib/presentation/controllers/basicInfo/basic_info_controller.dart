@@ -19,6 +19,17 @@ class RegistrationController extends GetxController{
   var showPassword = false.obs;
 
 
+  Map<String, String> getBasicDetails() {
+    return {
+      'firstName': firstNameController.value.text,
+      'lastName': lastNameController.value.text,
+      'email': emailController.value.text,
+      'mobileNumber': mobileNumberController.value.text,
+      'password':passwordController.value.text,
+    };
+  }
+
+
   @override
   void onClose() {
     firstNameController.value.dispose();
@@ -27,6 +38,15 @@ class RegistrationController extends GetxController{
     passwordController.value.dispose();
     confirmPasswordController.value.dispose();
     mobileNumberController.value.dispose();
+  }
+
+  void clearAllField(){
+    firstNameController.value.clear();
+    lastNameController.value.clear();
+    emailController.value.clear();
+    passwordController.value.clear();
+    confirmPasswordController.value.clear();
+    mobileNumberController.value.clear();
   }
 
   void SubmitRegistration() {

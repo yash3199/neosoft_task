@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:neosoft_task/presentation/controllers/addressInfo/address_info_controller.dart';
-import 'package:neosoft_task/presentation/controllers/basicInfo/basic_info_controller.dart';
-import 'package:neosoft_task/presentation/controllers/completeInfo/complete_info_controller.dart';
 import 'package:neosoft_task/src/core/routes/routes.dart';
-
+import 'src/core/di/di.dart' as di;
 
 void main() {
-  Get.put(RegistrationController());
-  Get.put(EducationController());
-  Get.put(AddressController());
+  WidgetsFlutterBinding.ensureInitialized();
+  di.init();
   runApp(const MyApp());
 }
 
