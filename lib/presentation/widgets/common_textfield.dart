@@ -33,7 +33,8 @@ class _TextFormFieldCommonState extends State<TextFormFieldCommon> {
           controller: widget.controller,
           obscureText: widget.obscureText ?? false,
           decoration: InputDecoration(
-            labelText: widget.labelText,
+            hintText: widget.labelText,
+            hintStyle: TextStyle(color: Colors.grey),
             prefixIcon: widget.prefixIcon != null ? Icon(widget.prefixIcon,color: Colors.blue[900],) : null,
             suffixIcon: widget.suffixIcon !=null? GestureDetector(
                 onTap: widget.onTap ?? (){},
